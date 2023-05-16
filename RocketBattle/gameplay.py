@@ -156,7 +156,18 @@ def draw_winner(text):
     pygame.time.delay(5000)
 
 
+#Adding ai to the game
+def red_ai_movement(red, yellow):
+    # Simple AI logic for the red spaceship
+    if yellow.x > red.x and red.x + VEL + red.width < WIDTH:
+        red.x += VEL
+    elif yellow.x < red.x and red.x - VEL > BORDER.x + BORDER.width:
+        red.x -= VEL
 
+    if yellow.y > red.y and red.y + VEL + red.height < HEIGHT - 15:
+        red.y += VEL
+    elif yellow.y < red.y and red.y - VEL > 0:
+        red.y -= VEL
 
 
 
@@ -226,13 +237,14 @@ def main():
         keys_pressed=pygame.key.get_pressed() #gets all keys being pressed down atm 1 way of handling keys
         
         yellow_handle_movement(keys_pressed,yellow) #hah, a function for everything
-        red_handle_movement(keys_pressed,red)
+        #Call AI opponent's movement
+        red_ai_movement(red,yellow)
 
         handle_bullets(yellow_bullets,red_bullets,yellow,red)
-
         draw_window(red,yellow,red_bullets,yellow_bullets,red_health,yellow_health) #loop call to the drawing
-
-
+    
+    # quits pygame
+    pygame.quit() 
 
     main()
 
